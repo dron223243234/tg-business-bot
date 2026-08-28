@@ -1,7 +1,7 @@
 import aiosqlite
 import asyncio
 
-file_name = 'base.bd'
+file_name = 'bot.bd'
 
 
 async def init_db():
@@ -27,26 +27,26 @@ async def init_db():
         await db.commit()
 
 
-async def add(id: int, name: str, fname: str):
+async def add_user(uid: int, name: str, fname: str):
     async with aiosqlite.connect(file_name) as db:
         await db.execute(
             """
             INSERT OR IGNORE INTO users (user_id, username, full_name)
             VALUES (?, ?, ?)
         """,
-            (id, name, fname),
+            (uid, name, fname),
         )
         await db.commit()
 
 
-async def order(id: int, name: str, phone: str, desc: str) -> int:
+async def add_order(uid: int, name: str, phone: str, desc: str) -> int:
     async with aiosqlite.connect(file_name) as db:
         cursor = await db.execute(
             """
             INSERT INTO orders (user_id, name, phone, description)
             VALUES (?, ?, ?, ?)
         """,
-            (id, name, phone, desc),
+            (uid, name, phone, desc),
         )
         await db.commit()
         return cursor.lastrowid
