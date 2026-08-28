@@ -3,7 +3,6 @@ from aiogram import Bot, Dispatcher
 from config import token
 from db import init_db
 from handlers import router
-from aiogram.client.session.aiohttp import AiohttpSession
 
 
 async def main():
